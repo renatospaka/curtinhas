@@ -3,10 +3,10 @@ version: "3.5"
 services:
   app:
     build: .
-    container_name: app_events
+    container_name: app_dispatcher
     volumes:
       - .:/go/src/
     ports:
-      - 3500:3500
+      - 4500:4500
     extra_hosts:
       - "host.docker.internal:172.17.0.1"
