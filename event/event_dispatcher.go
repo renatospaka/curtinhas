@@ -15,12 +15,12 @@ type eventDispatcher struct {
 }
 
 func NewEventDispatcher() *eventDispatcher {
-	return &EventDispatcher{
+	return &eventDispatcher{
 		Listeners: make(map[string][]Listener),
 	}
 }
 
-func (e *EeventDispatcher) AddListener(event strng, listener Listener) {
+func (e *eventDispatcher) AddListener(event string, listener Listener) {
 	if e.Listeners == nil {
 		e.Listeners = make(map[string][]Listener)
 	}

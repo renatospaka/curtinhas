@@ -1,15 +1,15 @@
 package event_test
 
-import {
+import (
 	"testing"
-	assert "githuib.com/stretchr/testify/assert"
+	assert "github.com/stretchr/testify/assert"
 
-	"github.com/renatospaka/events/event"
-}
+	"github.com/renatospaka/event-dispatcher/event"
+)
 
-type testListener strunct {
+type testListener struct {
 	data interface{}
-	called
+	called bool
 }
 
 func (l *testListener) Handle() error {
@@ -35,21 +35,21 @@ func (t * testEvent) GetData() interface{} {
 }
 
 func TestEventDispatcher_AddListener(t *testing.T) {
-	ed = event.NewEventDispatcher()
+	ed := event.NewEventDispatcher()
 	testListener := &testListener{}
 	ed.AddListener("test", testListener)
 
-	assert.Equal(t, 1, len(ed.testListener["test"]))
+	assert.Equal(t, 1, len(ed.Listeners["test"]))
 	assert.Equal(t, testListener, ed.Listeners["test"][0])
 }
 
 func TestEventDispatcher_Dispatch(t *testing.T) {
-	ed = event.NewEventDispatcher()
+	ed := event.NewEventDispatcher()
 	testListener := &testListener{}
 	ed.AddListener("test", testListener)
 	
 	event := &testEvent{}
 	ed.Dispatch(event)
 
-	assert(t, testListener.called)
+	assert.True(t, testListener.called)
 }
