@@ -4,6 +4,7 @@ FROM golang:1.18.0-stretch
 RUN apt-get update && \
     apt-get install build-essential librdkafka-dev -y  && \
     apt-get install build-essential golang-github-spf13-viper-dev -y  && \
+    go install -v golang.org/x/tools/gopls@latest && \
     apt-get install -y tzdata 
 
 WORKDIR /go/src

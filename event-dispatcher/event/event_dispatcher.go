@@ -10,24 +10,24 @@ type Event interface {
 	GetData() interface{}
 }
 
-type eventDispatcher struct {
+type EventDispatcher struct {
 	Listeners map[string][]Listener
 }
 
-func NewEventDispatcher() *eventDispatcher {
-	return &eventDispatcher{
+func NewEventDispatcher() *EventDispatcher {
+	return &EventDispatcher{
 		Listeners: make(map[string][]Listener),
 	}
 }
 
-func (e *eventDispatcher) AddListener(event string, listener Listener) {
+func (e *EventDispatcher) AddListener(event string, listener Listener) {
 	if e.Listeners == nil {
 		e.Listeners = make(map[string][]Listener)
 	}
 	e.Listeners[event] = append(e.Listeners[event], listener)
 }
 
-func (e *eventDispatcher) Dispatch(event Event) {
+func (e *EventDispatcher) Dispatch(event Event) {
 	if e.Listeners == nil {
 		return
 	}
