@@ -7,6 +7,9 @@ import (
 
 func main() {
 	ed := event.NewEventDispatcher()
+	sendEmailListener := user.NewSendEmailListener()
+	ed.AddListener("user_created", sendEmailListener)
+	
 	user := user.NewUser(ed)
 	user.Create("Renato")
 }
