@@ -3,7 +3,7 @@ version: "3.5"
 services:
   app:
     build: .
-    container_name: app_dispatcher
+    container_name: app_event_dispatcher
     volumes:
       - .:/go/src/
     ports:
