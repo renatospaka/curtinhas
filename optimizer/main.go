@@ -12,4 +12,7 @@ func main() {
 
 	optimizer.Main2()
 	fmt.Println()
+
+	optimizer.Main3()
+	fmt.Println()
 }

@@ -1,5 +1,5 @@
-# Declare named with return!
-Declare the named return with the return type, not only declare the return type.
+# Declare slice with length!
+Declare your slice with length if possible.
 
 ## The above code run result is:
 declareReturnTypeOnly ExecTime is                                              ->  3.6µs <br/>
