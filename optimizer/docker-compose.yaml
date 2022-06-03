@@ -1,0 +1,12 @@
+version: "3.5"
+
+services:
+  app:
+    build: .
+    container_name: app_optimizer
+    volumes:
+      - .:/go/src/
+    ports:
+      - 4501:4500
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
