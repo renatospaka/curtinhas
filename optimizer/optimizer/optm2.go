@@ -7,7 +7,7 @@ import (
 )
 
 func Main2() {
-	fmt.Println("Declare named with return!")
+	fmt.Println("#2 - Declare named with return!")
 	str0 := declareReturnTypeOnly()
 	log.Println(str0)
 

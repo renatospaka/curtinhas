@@ -80,7 +80,7 @@ var empl2 employee2
 var empl3 employee3
 
 func Main1() {
-	fmt.Println("Struct in better order!")
+	fmt.Println("#1 - Struct in better order!")
 	fmt.Printf("Size of %T struct: %d bytes\n", empl1, unsafe.Sizeof(empl1))
 	fmt.Printf("Size of %T struct: %d bytes\n", empl2, unsafe.Sizeof(empl2))
 	fmt.Printf("Size of %T struct: %d bytes\n", empl3, unsafe.Sizeof(empl3))
