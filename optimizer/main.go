@@ -21,4 +21,7 @@ func main() {
 
 	optimizer.Main5()
 	fmt.Println()
+
+	optimizer.Main6()
+	fmt.Println()
 }
