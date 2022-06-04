@@ -18,4 +18,10 @@ func main() {
 
 	optimizer.Main4()
 	fmt.Println()
+
+	optimizer.Main5()
+	fmt.Println()
+
+	optimizer.Main6()
+	fmt.Println()
 }
