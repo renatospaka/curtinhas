@@ -6,7 +6,7 @@ import (
 )
 
 func TestingAbstractFactory() {
-	fmt.Println("This is the abstract factory implementation")
+	fmt.Println("This is the ABSTRACT factory implementation")
 	adidasFactory, _ := abstractFactory.GetSportsFactory("adidas")
 	nikeFactory, _ := abstractFactory.GetSportsFactory("nike")
 
