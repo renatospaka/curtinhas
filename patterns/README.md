@@ -8,6 +8,7 @@ https://golangexample.com/design-patterns-in-golang/
 ## CREATIONAL PATTERNS
 1. Abstract Factory
 2. Builder
+3. Factory
 
 ## STRUCTURAL PATTERNS
 1. Facade
