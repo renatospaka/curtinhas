@@ -11,6 +11,7 @@ func testingCreationalPatterns() {
 	testing.TestingAbstractFactory()
 	testing.TestingBuilder()
 	testing.TestingFactory()
+	testing.TestingPrototype()
 }
 
 func testingStructuralPatterns() {
