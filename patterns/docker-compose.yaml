@@ -7,6 +7,6 @@ services:
     volumes:
       - .:/go/src/
     ports:
-      - 3100:3100
+      - 8009:8000
     extra_hosts:
       - "host.docker.internal:172.17.0.1"
