@@ -9,9 +9,10 @@ func main() {
 
 func testingCreationalPatterns() {
 	testing.TestingAbstractFactory()
+	testing.TestingBuilder()
+	testing.TestingFactory()
 }
 
 func testingStructuralPatterns() {
 	testing.TestingFacade()
-	testing.TestingBuilder()
 }

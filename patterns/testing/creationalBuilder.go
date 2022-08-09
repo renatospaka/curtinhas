@@ -7,7 +7,7 @@ import (
 )
 
 func TestingBuilder() {
-	fmt.Println("This is the builder implementation")
+	fmt.Println("This is the BUILDER implementation")
 normalBuilder := builder.GetBuilder("normal")
 	iglooBuilder := builder.GetBuilder("igloo")
 

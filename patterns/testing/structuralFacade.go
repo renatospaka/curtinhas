@@ -8,7 +8,7 @@ import (
 )
 
 func TestingFacade() {
-	fmt.Println("This is the facade implementation")
+	fmt.Println("This is the FACADE implementation")
 	walletFacade := facade.NewWalletFacade("abc", 1234)
 	fmt.Println()
 
