@@ -6,3 +6,8 @@
 
 ## Running Processes
 <a>Execute sudo netstat -tunlp</a>
+</p>
+
+## Wire Mock
+<a href="https://wiremock.org/">WireMock to keep API contract consistency</a>
+</p>
