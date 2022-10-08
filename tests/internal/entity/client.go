@@ -44,5 +44,8 @@ func (c *Client) AddPoints(points int) error {
 	}
 
 	c.Points += points
+	// if points%2 == 0 {
+	// 	c.Points += points
+	// }
 	return nil
 }

@@ -29,7 +29,7 @@ func TestNewClientWithInvalidData(t *testing.T) {
 func TestAddPoints(t *testing.T) {
 	client, _ := entity.NewClient("John Doe", "jdoe@notemail.com")
 	err := client.AddPoints(10)
-	assert.NotNil(t, err)
+	assert.Nil(t, err)
 	assert.Equal(t, 10, client.Points)
 }
 
@@ -44,4 +44,25 @@ func TestAddPointsBatch(t *testing.T) {
 			t.Errorf("points expected: %d, got: %d", point, client.Points)
 		}
 	}
+}
+
+// go test -fuzz . (in the test files folder)
+func FuzzClient_AddPoints(f *testing.F) {
+	seeding := []int{2, 4, 6, 8, 10}
+	for _, seed := range seeding {
+		f.Add(seed)
+	}
+
+	f.Fuzz(func(t *testing.T, points int) {
+		client, _ := entity.NewClient("John Doe", "jdoe@notemail.com")
+		err := client.AddPoints(points)
+		// assert.Nil(t, err)
+		if err != nil {
+			return
+		}
+
+		if client.Points != points {
+			t.Errorf("points expected: %d, got: %d", points, client.Points)
+		}
+	})
 }
