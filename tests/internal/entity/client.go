@@ -13,6 +13,10 @@ type Client struct {
 	Points int
 }
 
+type ClientRepositoryInterface interface {
+	Save(client *Client) error
+}
+
 func NewClient (name, email string) (*Client, error) {
 	client := &Client{
 		ID:     uuid.New().String(),
