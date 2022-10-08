@@ -5,26 +5,35 @@ import (
 	"time"
 )
 
-func numeros() {
+func numeros(done chan <- bool) {
+	// chan <- bool = readonly channel
 	for i := 0; i<10; i++ {
 		fmt.Printf("%d ", i)
 		time.Sleep(time.Millisecond * 150)
 	}
-	// fmt.Println()
+
+	done <- true
 }
 
-func letras() {
+func letras(done chan <- bool) {
+	// chan <- bool = readonly channel
 	for l := 'a'; l<'j'; l++ {
 		fmt.Printf("%c ", l)
 		time.Sleep(time.Millisecond * 230)
 	}
-	// fmt.Println()
+
+	done <- true
 } 
 
 func main() {
-	go numeros()
-	go letras()
-	time.Sleep(5 * time.Second)
+	num := make(chan bool)
+	let := make(chan bool)
+
+	go numeros(num)
+	go letras(let)
+
+	<- num
+	<- let
 
 	fmt.Println("Final da execução")
 }
