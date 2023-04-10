@@ -12,5 +12,6 @@ These snippeds are described and explained in this <a href="https://golangexampl
 
 ## STRUCTURAL PATTERNS
 1. Facade
+2. Flywight
 
 ## BEHAVIORAL PATTERNS

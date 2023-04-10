@@ -16,4 +16,5 @@ func testingCreationalPatterns() {
 
 func testingStructuralPatterns() {
 	testing.TestingFacade()
+	testing.TestingFlyweight()
 }
