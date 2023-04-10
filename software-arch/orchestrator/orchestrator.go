@@ -3,7 +3,10 @@ package main
 import (
 	"context"
 	"log"
+	"sync/atomic"
 	"time"
+
+	"golang.org/x/sync/errgroup"
 )
 
 type Service func(ctx context.Context) (int64, error)
@@ -16,16 +19,27 @@ func main() {
 	}
 
 	var total int64 = 0
+	
+	start := time.Now()
+	grp, ctx := errgroup.WithContext(context.Background())
+
 	for _, service := range services {
-		v, err := service(context.Background())
-		if err != nil {
-			log.Fatalln("Service", err)
-		}
+		grp.Go(func() error {
+			v, err := service(ctx)
+			if err != nil {
+				return err
+			}
+			_ = atomic.AddInt64(&total, v)
 
-		total += v
+			return nil
+		})
 	}
+	if err := grp.Wait(); err != nil {
+		log.Fatalln("Service", err)
+	}		
 
-	log.Printf("Total is: %d\n", total)
+	duration := time.Since(start)
+	log.Println("Total is: ", total, " Duration of", duration)
 }
 
 func Service1(ctx context.Context) (int64, error) {
