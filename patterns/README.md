@@ -15,3 +15,4 @@ These snippeds are described and explained in this <a href="https://golangexampl
 2. Flywight
 
 ## BEHAVIORAL PATTERNS
+1. Chain of Responsability
