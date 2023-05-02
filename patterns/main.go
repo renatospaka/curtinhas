@@ -5,6 +5,7 @@ import "github.com/renatospaka/design-patterns/testing"
 func main() {
 	testingCreationalPatterns()
 	testingStructuralPatterns()
+	testingBehavioralPatterns()
 }
 
 func testingCreationalPatterns() {
@@ -16,4 +17,8 @@ func testingCreationalPatterns() {
 
 func testingStructuralPatterns() {
 	testing.TestingFacade()
+}
+
+func testingBehavioralPatterns() {
+	testing.ChainOfResponsability()
 }

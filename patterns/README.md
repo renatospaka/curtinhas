@@ -14,3 +14,4 @@ These snippeds are described and explained in this <a href="https://golangexampl
 1. Facade
 
 ## BEHAVIORAL PATTERNS
+1. Chain of Responsability
