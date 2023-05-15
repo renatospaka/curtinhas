@@ -30,4 +30,12 @@ func main() {
 	fmt.Printf("Changing next song...\n")
 	playList.Next()
 	fmt.Printf("Now playing: %s by %s\n", playList.NowPlaying.Name, playList.NowPlaying.Artist)
+	
+	fmt.Printf("Changing previous song...\n")
+	playList.Previous()
+	fmt.Printf("Now playing: %s by %s\n", playList.NowPlaying.Name, playList.NowPlaying.Artist)
+	
+	fmt.Printf("Changing previous song...\n")
+	playList.Previous()
+	fmt.Printf("Now playing: %s by %s\n", playList.NowPlaying.Name, playList.NowPlaying.Artist)
 }

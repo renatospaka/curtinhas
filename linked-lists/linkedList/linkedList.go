@@ -3,14 +3,16 @@ package singlyLinkedList
 import "fmt"
 
 type Song struct {
-	Name   string
-	Artist string
-	Next   *Song
+	Name     string
+	Artist   string
+	Previous *Song
+	Next     *Song
 }
 
 type Playlist struct {
 	Name       string
 	head       *Song
+	tail       *Song
 	NowPlaying *Song
 }
 
@@ -19,7 +21,6 @@ func CreatePlayList(name string) *Playlist {
 		Name: name,
 	}
 }
-
 
 func (p *Playlist) Add(name, artist string) error {
 	s := &Song{
@@ -30,16 +31,14 @@ func (p *Playlist) Add(name, artist string) error {
 	if p.head == nil {
 		p.head = s
 	} else {
-		currentNode := p.head
-		for currentNode.Next != nil {
-			currentNode = currentNode.Next
-		}
+		currentNode := p.tail
 		currentNode.Next = s
+		s.Previous = p.tail
 	}
+	p.tail = s
 
 	return nil
 }
-
 
 func (p *Playlist) ShowAll() error {
 	currentNode := p.head
@@ -64,5 +63,10 @@ func (p *Playlist) Play() *Song {
 
 func (p *Playlist) Next() *Song {
 	p.NowPlaying = p.NowPlaying.Next
+	return p.NowPlaying
+}
+
+func (p *Playlist) Previous() *Song {
+	p.NowPlaying = p.NowPlaying.Previous
 	return p.NowPlaying
 }
