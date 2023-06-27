@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    container_name: app_url_shortener
+    volumes:
+      - .:/go/src/
+    ports:
+      - 3200:8000
+    depends_on:
+      - db
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
+    networks:
+      - shorten_network
+
+  db:
+    image: postgres:15
+    container_name: db_url_shortener
+    ports:
+      - 3201:5432
+    volumes:
+      - ~/postgres/urls:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=urls
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
+    networks:
+      - shorten_network
+
+networks:
+  shorten_network:
+    driver: bridge
