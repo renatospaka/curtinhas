@@ -1,0 +1,11 @@
+GET http://localhost:3200/www.google.com HTTP/1.1
+
+
+###
+
+http://localhost:3200/create HTTP/1.1
+content-type: application/json
+
+{
+    "url": "www.google.com"
+}
