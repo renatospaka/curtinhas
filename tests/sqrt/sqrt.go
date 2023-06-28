@@ -1,7 +1,8 @@
-package sqrt
+package main
 
 import (
 	"errors"
+	"fmt"
 )
 
 // Common errors
@@ -34,4 +35,12 @@ func Sqrt(val float64) (float64, error) {
 		guess = (val / guess + guess) / 2.0
 	}
 	return 0.0, ErrNoSolution
+}
+
+func main() {
+	for i := 2; i <= 15; i++ {
+		n := i * i
+		sq, _ := Sqrt(float64(n))
+		fmt.Printf("the sqrt of %d is %f\n", n, sq)
+	}
 }

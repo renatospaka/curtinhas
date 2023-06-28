@@ -1,4 +1,4 @@
-package sqrt
+package main
 
 import (
 	"testing"
