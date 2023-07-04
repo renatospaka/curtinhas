@@ -10,7 +10,7 @@ import (
 func TestAPIGetEmployees(t *testing.T) {
 	resp := &ListModel{
 		Status: "success",
-		Data:   []EmployeeModel{
+		Data: 	[]EmployeeModel{
 			{
 				ID:             "1",
 				EmployeeName:   "Tiger Nixon",
@@ -21,7 +21,7 @@ func TestAPIGetEmployees(t *testing.T) {
 		},
 	}
 
-	srv := helpers.HttpMock("/api/vi/employees", http.StatusOK, resp)
+	srv := helpers.HttpMock("/api/v1/employees", http.StatusOK, resp)
 	defer srv.Close()
 
 	api := API{URL: srv.URL}
