@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/renatospaka/http-mock/helpers"
+	"github.com/renatospaka/http-mock/implementation1/helpers"
 )
 
 func TestAPIGetEmployees(t *testing.T) {

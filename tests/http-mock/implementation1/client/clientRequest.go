@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/renatospaka/http-mock/helpers"
+	"github.com/renatospaka/http-mock/implementation1/helpers"
 )
 
 type ListModel struct {
