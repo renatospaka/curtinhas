@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"fmt"
 	"io"
 	"net/http"
 	"reflect"
@@ -49,6 +50,18 @@ func TestApiV1(t *testing.T) {
 			},
 			Error: nil,
 		},
+    {
+      Body: ``,
+      StatusCode: http.StatusNotFound,
+      Result: nil,
+      Error: fmt.Errorf(http.StatusText(http.StatusNotFound)),
+    },
+    {
+      Body: ``,
+      StatusCode: http.StatusBadRequest,
+      Result: nil,
+      Error: fmt.Errorf(http.StatusText(http.StatusBadRequest)),
+    },
 	}
 
 	for _, test := range tt {
