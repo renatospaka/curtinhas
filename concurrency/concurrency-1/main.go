@@ -10,7 +10,7 @@ type User struct {
 	Name string
 }
 
-func doSomething(u User) {
+func doSomething(u *User) {
 	u.lock.RLock()
 	defer u.lock.RUnlock()
 
@@ -20,7 +20,7 @@ func doSomething(u User) {
 }
 
 func main() {
-	u := User{Name: "John"}
+	u := &User{Name: "John"}
 	doSomething(u)
 	fmt.Printf("Name: %s\n", u.Name)
 }
