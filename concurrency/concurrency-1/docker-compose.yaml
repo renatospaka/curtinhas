@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    container_name: app_concurrency_go_1
+    volumes:
+      - .:/go/src/
+    ports:
+      - 8001:8000
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
