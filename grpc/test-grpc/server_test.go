@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"errors"
+	"io"
 	"log"
 	"net"
 	"testing"
@@ -127,9 +128,82 @@ func TestTelephoneServer_GetContact(t *testing.T) {
 				}
 			} else {
 				if tt.expected.out.Name != out.Name ||
-					tt.expected.out.Number != out.Number ||
-					tt.expected.out.Lastname != out.Lastname {
+				tt.expected.out.Number != out.Number ||
+				tt.expected.out.Lastname != out.Lastname {
 					t.Errorf("Out -> \nWant: %q\nGot : %q", tt.expected.out, out)
+				}
+			}
+		})
+	}
+}
+
+func TestTelephoneServer_ListContacts(t *testing.T) {
+	ctx := context.Background()
+	client, closer := server(ctx)
+	defer closer()
+
+	type expectation struct {
+		out []*pb.ListContactsReply
+		err error
+	}
+
+	tests := map[string]struct {
+		in *pb.ListContactsRequest
+		expected expectation
+	}{
+		"Must_Success": {
+			in: &pb.ListContactsRequest{},
+			expected: expectation{
+				out: []*pb.ListContactsReply{
+					{
+						Name:     "Nukhet",
+						Lastname: "Duru",
+						Number:   "11111111111",
+					},
+					{
+						Name:     "Zeki",
+						Lastname: "Muren",
+						Number:   "22222222222",
+					},
+					{
+						Name:     "Sebnem",
+						Lastname: "Ferah",
+						Number:   "33333333333",
+					},
+				},
+				err: nil,
+			},
+		},
+	}
+
+	for scenario, tt := range tests {
+		t.Run(scenario, func(t *testing.T) {
+			out, err := client.ListContacts(ctx, tt.in)
+			var outs []*pb.ListContactsReply
+
+			for {
+				o, err := out.Recv()
+				if errors.Is(err, io.EOF) {
+					break
+				}
+				outs = append(outs, o)
+			}
+
+			if err != nil {
+				if tt.expected.err.Error() != err.Error() {
+					t.Errorf("Err -> \nWant: %q\nGot: %q\n", tt.expected.err, err)
+				}
+			} else {
+				if len(outs) != len(tt.expected.out) {
+					t.Errorf("Out -> \nWant: %q\nGot : %q", tt.expected.out, outs)
+				} else {
+					for i, o := range outs {
+						if o.Name != tt.expected.out[i].Name ||
+						o.Lastname != tt.expected.out[i].Lastname ||
+						o.Number != tt.expected.out[i].Number {
+							t.Errorf("Out -> \nWant: %q\nGot : %q", tt.expected.out, outs)
+						}
+					}
 				}
 			}
 		})
