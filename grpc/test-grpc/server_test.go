@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"io"
@@ -298,4 +299,99 @@ func TestTelephoneServer_RecordCallHistory(t *testing.T) {
 	}
 
 	t.Log("TestTelephoneServer_RecordCallHistory - finishing")
+}
+
+func TestTelephoneServer_SendMessage(t *testing.T) {
+	ctx := context.Background()
+	client, closer := server(ctx)
+	defer closer()
+
+	type expectation struct {
+		out []*pb.SendMessageReply
+		err error
+	}
+
+	t.Log("TestTelephoneServer_SendMessage - initiating")
+
+	tests := map[string]struct {
+		in       []*pb.SendMessageRequest
+		expected expectation
+	}{
+		"Must_Sucess": {
+			in: []*pb.SendMessageRequest{
+				{
+					Msg: []byte("Hi!"),
+				},
+				{
+					Msg: []byte("How are you?"),
+				},
+				{
+					Msg: []byte("Thank you!"),
+				},
+				{
+					Msg: []byte("."),
+				},
+			},
+			expected: expectation{
+				out: []*pb.SendMessageReply{
+					{
+						Msg: []byte("Hello!"),
+					},
+					{
+						Msg: []byte("Fine, you?"),
+					},
+					{
+						Msg: []byte("Sorry, I don't understand :/"),
+					},
+				},
+				err: nil,
+			},
+		},
+	}
+
+	for scenario, tt := range tests {
+		t.Run(scenario, func(t *testing.T) {
+			outClient, err := client.SendMessage(ctx)
+
+			for _, v := range tt.in {
+				if err := outClient.Send(v); err != nil {
+					t.Errorf("Err -> %q", err)
+				}
+			}	
+			t.Log("TestTelephoneServer_SendMessage - stop sending")
+
+			if err := outClient.CloseSend(); err != nil {
+				t.Errorf("Err -> %q", err)
+			}
+
+			var outs []*pb.SendMessageReply
+			for {
+				o, err := outClient.Recv()
+				if errors.Is(err, io.EOF) {	
+					t.Log("TestTelephoneServer_SendMessage - EOF")
+					break
+				}
+				outs = append(outs, o)
+			}	
+			t.Log("TestTelephoneServer_SendMessage - stop receiving")
+
+			if err != nil {
+				if tt.expected.err.Error() != err.Error() {
+					t.Errorf("Err -> \nWant: %q\nGot: %q\n", tt.expected.err, err)
+				}
+			} else {
+				if len(outs) != len(tt.expected.out) {
+					t.Errorf("Out -> \nWant: %q\nGot : %q", tt.expected.out, outs)
+				} else {
+					for i, o := range outs {
+						if !bytes.Equal(o.Msg, tt.expected.out[i].Msg) {
+							t.Errorf("Out -> \nWant: %q\nGot : %q", tt.expected.out, outs)
+						}
+					}
+				}
+			}
+		})
+	}
+
+	t.Log("TestTelephoneServer_SendMessage - finishing")
 }
