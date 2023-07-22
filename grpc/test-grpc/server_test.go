@@ -142,81 +142,83 @@ func TestTelephoneServer_GetContact(t *testing.T) {
 	t.Log("TestTelephoneServer_GetContact - finishing")
 }
 
-// func TestTelephoneServer_ListContacts(t *testing.T) {
-// 	ctx := context.Background()
-// 	client, closer := server(ctx)
-// 	defer closer()
+func TestTelephoneServer_ListContacts(t *testing.T) {
+	ctx := context.Background()
+	client, closer := server(ctx)
+	defer closer()
 
-// 	type expectation struct {
-// 		out []*pb.ListContactsReply
-// 		err error
-// 	}
+	type expectation struct {
+		out []*pb.ListContactsReply
+		err error
+	}
 
-// 	t.Log("TestTelephoneServer_ListContacts - initiating")
+	t.Log("TestTelephoneServer_ListContacts - initiating")
 
-// 	tests := map[string]struct {
-// 		in       *pb.ListContactsRequest
-// 		expected expectation
-// 	}{
-// 		"Must_Success": {
-// 			in: &pb.ListContactsRequest{},
-// 			expected: expectation{
-// 				out: []*pb.ListContactsReply{
-// 					{
-// 						Name:     "Nukhet",
-// 						Lastname: "Duru",
-// 						Number:   "11111111111",
-// 					},
-// 					{
-// 						Name:     "Zeki",
-// 						Lastname: "Muren",
-// 						Number:   "22222222222",
-// 					},
-// 					{
-// 						Name:     "Sebnem",
-// 						Lastname: "Ferah",
-// 						Number:   "33333333333",
-// 					},
-// 				},
-// 				err: nil,
-// 			},
-// 		},
-// 	}
+	tests := map[string]struct {
+		in       *pb.ListContactsRequest
+		expected expectation
+	}{
+		"Must_Success": {
+			in: &pb.ListContactsRequest{},
+			expected: expectation{
+				out: []*pb.ListContactsReply{
+					{
+						Name:     "Nukhet",
+						Lastname: "Duru",
+						Number:   "11111111111",
+					},
+					{
+						Name:     "Zeki",
+						Lastname: "Muren",
+						Number:   "22222222222",
+					},
+					{
+						Name:     "Sebnem",
+						Lastname: "Ferah",
+						Number:   "33333333333",
+					},
+				},
+				err: nil,
+			},
+		},
+	}
 
-// 	for scenario, tt := range tests {
-// 		t.Run(scenario, func(t *testing.T) {
-// 			out, err := client.ListContacts(ctx, tt.in)
-// 			var outs []*pb.ListContactsReply
+	for scenario, tt := range tests {
+		t.Run(scenario, func(t *testing.T) {
+			out, err := client.ListContacts(ctx, tt.in)
+			
+			var outs []*pb.ListContactsReply
+			for {
+				o, err := out.Recv()
+				if errors.Is(err, io.EOF) {
+					t.Log("TestTelephoneServer_ListContacts - EOF")
+					break
+				}
+				outs = append(outs, o)
+			}
+			t.Log("TestTelephoneServer_ListContacts - stop receiving")
 
-// 			for {
-// 				o, err := out.Recv()
-// 				if errors.Is(err, io.EOF) {
-// 					break
-// 				}
-// 				outs = append(outs, o)
-// 			}
-
-// 			if err != nil {
-// 				if tt.expected.err.Error() != err.Error() {
-// 					t.Errorf("Err -> \nWant: %q\nGot: %q\n", tt.expected.err, err)
-// 				}
-// 			} else {
-// 				if len(outs) != len(tt.expected.out) {
-// 					t.Errorf("Out -> \nWant: %q\nGot : %q", tt.expected.out, outs)
-// 				} else {
-// 					for i, o := range outs {
-// 						if o.Name != tt.expected.out[i].Name ||
-// 							o.Lastname != tt.expected.out[i].Lastname ||
-// 							o.Number != tt.expected.out[i].Number {
-// 							t.Errorf("Out -> \nWant: %q\nGot : %q", tt.expected.out, outs)
-// 						}
-// 					}
-// 				}
-// 			}
-// 		})
-// 	}
-// 	t.Log("TestTelephoneServer_ListContacts - finishing")
-// }
+			if err != nil {
+				if tt.expected.err.Error() != err.Error() {
+					t.Errorf("Err -> \nWant: %q\nGot: %q\n", tt.expected.err, err)
+				}
+			} else {
+				if len(outs) != len(tt.expected.out) {
+					t.Errorf("Out -> \nWant: %q\nGot : %q", tt.expected.out, outs)
+				} else {
+					for i, o := range outs {
+						if o.Name != tt.expected.out[i].Name ||
+							o.Lastname != tt.expected.out[i].Lastname ||
+							o.Number != tt.expected.out[i].Number {
+							t.Errorf("Out -> \nWant: %q\nGot : %q", tt.expected.out, outs)
+						}
+					}
+				}
+			}
+		})
+	}
+	t.Log("TestTelephoneServer_ListContacts - finishing")
+}
 
 func TestTelephoneServer_RecordCallHistory(t *testing.T) {
 	ctx := context.Background()
