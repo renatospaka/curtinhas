@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"time"
 
@@ -23,6 +24,11 @@ func (hook *BugTrackerHook) Fire(entry *logrus.Entry) error {
 	return nil
 }
 
+type CustomFormatter struct{}
+func (f *CustomFormatter) Format(entry *logrus.Entry) ([]byte, error) {
+	return []byte(fmt.Sprintf("%s: %s\n", entry.Level.String(), entry.Message)), nil
+}
+
 func main() {
 	// Example 1: Basic Logging with Logrus
 	logrus.Error("Something went wrong!")
@@ -41,7 +47,39 @@ func main() {
 		"quantity": 13,
 	}).Info("New card added")
 
-	// Example 6: Logging a Fatal Error
-	logrus.Fatal("This is a fatal error")
+	// Example 8: Using The Trace Level
+	logrus.SetLevel(logrus.TraceLevel)
+	logrus.Trace("This is a trace log")
 
+	// Example 9: Logging to an io.Writer
+	logrus.SetOutput(os.Stdout)
+	logrus.Info("This log is written to stdout")
+
+	// Example 10: Logging in Different Timezones
+	logrus.SetFormatter(&logrus.JSONFormatter{TimestampFormat: time.RFC3339})
+	logrus.Info("Log with RFC3339 timestamp format.")
+
+	// Example 11: Log Entry Order
+	logrus.SetFormatter(&logrus.JSONFormatter{
+		FieldMap: logrus.FieldMap{
+			logrus.FieldKeyTime: "@timestamp",
+			logrus.FieldKeyLevel: "@level",
+			logrus.FieldKeyMsg: "@message",
+		},
+	})
+	logrus.Info("Log with consistent field order.")
+
+	// // Example 12: Log Redaction
+	// logrus.SetFormatter(&logrus.TextFormatter{DisableKeys: true})
+	// logrus.WithField("password", "secret").Info("Sensitive data is redacted.")
+
+	// Example 13: Custom Log Formatter
+	logrus.SetFormatter(new(CustomFormatter))
+	logrus.Info("Log with a custom formatter.")
+
+	// Example 6: Logging a Fatal Error
+	logrus.Fatal("This is a fatal error.")
+
+	// // Example 7: Logging With a Panic
+	// logrus.Panic("This is a panic error")
 }
