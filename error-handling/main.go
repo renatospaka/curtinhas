@@ -77,35 +77,29 @@ func main() {
 	if errors.Is(efmt, io.EOF) {
 		fmt.Println("End of File")
 	}
+	fmt.Println()
+	fmt.Println()
+	fmt.Println()
+	fmt.Println()
+
+
 	var e error = nil
-	e = errors.New("this is Err0")
-	e1 := errors.New("this is Err1")
-	e2 := errors.New("this is Err2")
-	e3 := errors.New("this is Err3")
-	// e4 := fmt.Errorf("this is Err4: %w", e)
-	e = errors.Join(nil, e, e1, e2, e3)
-	fmt.Println()
-	fmt.Println()
-	fmt.Println()
-	fmt.Println()
+	// e0 := errors.New("this is Err0")
+	e = errors.Join(e, errors.New("this is Err0"))
+	// e1 := errors.New("this is Err1")
+	e = errors.Join(e, errors.New("this is Err1"))
+	// e2 := errors.New("this is Err2")
+	e = errors.Join(e, errors.New("this is Err2"))
+	// e3 := errors.New("this is Err3")
+	e = errors.Join(e, errors.New("this is Err3"))
 	fmt.Println("start reading all errors in e")
 	fmt.Printf("first let's check how many errors there are there: \n%v\n", e)
 	fmt.Println("reading...")
-	var errs []error
+	var errs []error = []error{}
 	errs = UnwrapJoin(e)
 	for x := 0; x < len(errs); x++ {
 		fmt.Printf("%dth error = %v\n", x+1, errs[x])
 	}
-	// count := 0
-	// for {
-	// 	t = errors.Unwrap(e)
-	// 	fmt.Printf("e is %v\n", t)
-	// 	if t == nil {
-	// 		break
-	// 	}
-	// 	count++
-	// 	fmt.Printf("%dth error = %v\n", count, t)
-	// } 
 	fmt.Println("read!")
 
 	// wrapped := errors.Unwrap(e)
