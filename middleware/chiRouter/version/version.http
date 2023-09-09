@@ -1,0 +1,11 @@
+GET http://localhost:3333/v1/articles HTTP/1.1
+
+###
+
+GET http://localhost:3333/v2/articles HTTP/1.1
+
+###
+
+GET http://localhost:3333/v3/articles HTTP/1.1
+
+###
