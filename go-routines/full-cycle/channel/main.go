@@ -2,24 +2,20 @@ package main
 
 import (
 	"fmt"
-	"net/http"
-	// "sync"
-	"sync/atomic"
+	"time"
 )
 
-var number uint64 = 0
-
+// thread 1
 func main() {
-	// m := sync.Mutex{}
+	canal := make(chan string)
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		// m.Lock()
-		// number++
-		// m.Unlock()
-		atomic.AddUint64(&number, 1)
+	// thread 2
+	go func() {
+		time.Sleep(500 * time.Millisecond)
+		canal <- "Olá canal" //enche o canal
+	}()
 
-		// time.Sleep(150 * time.Millisecond)
-		w.Write([]byte(fmt.Sprintf("Voce teve %d acessos nessa página.\n", number)))
-	})
-	http.ListenAndServe(":3000", nil)
+	// thread 1
+	msg := <- canal	// esvazia o canal
+	fmt.Println(msg)
 }
