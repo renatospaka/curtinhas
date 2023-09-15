@@ -1,20 +1,12 @@
 package main
 
-import (
-	"fmt"
-	"sync"
-)
+import "fmt"
 
 // thread 1
 func main() {
 	ch := make(chan int)
-	wg := sync.WaitGroup{}
-	wg.Add(10)
-
 	go publisher(ch)
-	go reader(ch, &wg)
-
-	wg.Wait()
+	reader(ch)
 }
 
 func publisher(ch chan int) {
@@ -24,9 +16,8 @@ func publisher(ch chan int) {
 	close(ch)
 }
 
-func reader(ch chan int, wg *sync.WaitGroup) {
+func reader(ch chan int) {
 	for x := range ch {
 		fmt.Printf("Received %d\n", x)
-		wg.Done()
 	}
 }
