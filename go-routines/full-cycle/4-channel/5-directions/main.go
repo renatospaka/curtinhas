@@ -18,3 +18,4 @@ func recebe(nome string, hello chan<- string) {
 func le(data <-chan string) {
 	fmt.Println(<- data)
 }
+
