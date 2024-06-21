@@ -1,6 +1,6 @@
 module github.com/renatospaka/event-dispatcher
 
-go 1.18
+go 1.22.2
 
 require github.com/stretchr/testify v1.7.1
 

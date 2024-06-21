@@ -1,4 +1,4 @@
-FROM golang:1.18.0-stretch
+FROM golang:1.22.2
 
 ## UPDATE THE OS
 RUN apt-get update && \
