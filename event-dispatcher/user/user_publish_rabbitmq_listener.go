@@ -15,6 +15,6 @@ func (l *publishOnRabbitMQListener) SetData(data interface{}) {
 }
 
 func (l *publishOnRabbitMQListener) Handle() error {
-	fmt.Println("publicado no RabbitMQ. Nome do usuário: ", l.data.(string))
+	fmt.Println("publicado no RabbitMQ para o usuário:", l.data.(string))
 	return nil
 }

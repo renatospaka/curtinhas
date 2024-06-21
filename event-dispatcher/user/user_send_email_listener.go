@@ -15,6 +15,6 @@ func (l *sendEmailListener) SetData(data interface{}) {
 }
 
 func (l *sendEmailListener) Handle() error {
-	fmt.Println("eMail enviado para ", l.data.(string))
+	fmt.Println("eMail enviado para", l.data.(string))
 	return nil
 }

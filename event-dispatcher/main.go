@@ -13,5 +13,6 @@ func main() {
 	ed.AddListener("user_created", publishOnRabbitMQListener)
 
 	user := user.NewUser(ed)
-	user.Create("Renato")
+	_ = user.Create("Renato")
+	_ = user.Create("Café")
 }
