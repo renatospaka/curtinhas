@@ -1,4 +1,4 @@
-module github.com/renatospaka/event-dispatcher
+module github.com/renatospaka/event-dispatcher/phase1
 
 go 1.22.2
 
