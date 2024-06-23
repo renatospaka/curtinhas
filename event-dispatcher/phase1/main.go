@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/renatospaka/event-dispatcher/event"
-	"github.com/renatospaka/event-dispatcher/user"
+	"github.com/renatospaka/event-dispatcher/phase1/event"
+	"github.com/renatospaka/event-dispatcher/phase1/user"
 )
 
 func main() {

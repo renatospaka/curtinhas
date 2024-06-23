@@ -1,6 +1,6 @@
 package user
 
-import "github.com/renatospaka/event-dispatcher/event"
+import "github.com/renatospaka/event-dispatcher/phase1/event"
 
 type user struct {
 	name       string
