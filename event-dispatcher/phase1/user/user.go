@@ -3,7 +3,7 @@ package user
 import "github.com/renatospaka/event-dispatcher/event"
 
 type user struct {
-	name string
+	name       string
 	dispatcher *event.EventDispatcher
 }
 
