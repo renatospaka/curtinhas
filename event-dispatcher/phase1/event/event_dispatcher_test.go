@@ -2,13 +2,13 @@ package event_test
 
 import (
 	"testing"
-	assert "github.com/stretchr/testify/assert"
 
-	"github.com/renatospaka/event-dispatcher/event"
+	"github.com/renatospaka/event-dispatcher/phase1/event"
+	assert "github.com/stretchr/testify/assert"
 )
 
 type testListener struct {
-	data interface{}
+	data   interface{}
 	called bool
 }
 
@@ -29,7 +29,7 @@ func (t *testEvent) GetKey() string {
 	return "test"
 }
 
-func (t * testEvent) GetData() interface{} {
+func (t *testEvent) GetData() interface{} {
 	t.data = "test"
 	return t.data
 }
@@ -47,7 +47,7 @@ func TestEventDispatcher_Dispatch(t *testing.T) {
 	ed := event.NewEventDispatcher()
 	testListener := &testListener{}
 	ed.AddListener("test", testListener)
-	
+
 	event := &testEvent{}
 	ed.Dispatch(event)
 
