@@ -2,7 +2,10 @@ package events
 
 import "errors"
 
-var ErrHandlerAlreadyRegistered = errors.New("handler already registered")
+var (
+	ErrHandlerAlreadyRegistered = errors.New("handler already registered")
+	ErrEventNotFound            = errors.New("event not found")
+)
 
 type EventDispatcher struct {
 	handlers map[string][]EventHandlerInterface
@@ -46,4 +49,16 @@ func (d *EventDispatcher) Dispatch(event EventInterface) error {
 		}
 	}
 	return nil
+}
+
+func (d EventDispatcher) Remove(eventName string, handler EventHandlerInterface) error {
+	if handlers, ok := d.handlers[eventName]; ok {
+		for idx, h := range handlers {
+			if h == handler {
+				d.handlers[eventName] = append(handlers[:idx], handlers[idx+1:]...)
+				return nil
+			}
+		}
+	}
+	return ErrEventNotFound
 }
