@@ -159,7 +159,7 @@ func (suite *EventDispatcherTestSuite) TestEventDispatcher_Remove() {
 	err = suite.eventDispatcher.Remove(suite.event1.GetName(), &suite.handler1)
 	suite.Nil(err)
 	suite.Equal(1, len(suite.eventDispatcher.handlers[suite.event1.GetName()]))
-	// suite.Equal(suite.T(), &suite.handler2, suite.eventDispatcher.handlers[suite.event1.GetName()][0])
+	suite.Equal(suite.T(), &suite.handler2, suite.eventDispatcher.handlers[suite.event1.GetName()][0])
 
 	err = suite.eventDispatcher.Remove(suite.event1.GetName(), &suite.handler3)
 	suite.ErrorIs(err, ErrEventNotFound)
