@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	// "runtime/debug"
+)
 
 func panicCode() {
 	var x *int
@@ -10,6 +13,7 @@ func panicCode() {
 func handlePanic() {
 	if panicInfo := recover(); panicInfo != nil {
 		fmt.Println("oh no!!", panicInfo)
+		// debug.PrintStack()
 	} else {
 		fmt.Println("never goes here")
 	}
