@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	// "runtime/debug"
+	"runtime/debug"
 )
 
 func panicCode() {
@@ -13,7 +13,7 @@ func panicCode() {
 func handlePanic() {
 	if panicInfo := recover(); panicInfo != nil {
 		fmt.Println("oh no!!", panicInfo)
-		// debug.PrintStack()
+		debug.PrintStack()
 	} else {
 		fmt.Println("never get here")
 	}
