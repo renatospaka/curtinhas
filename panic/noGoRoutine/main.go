@@ -15,7 +15,7 @@ func handlePanic() {
 		fmt.Println("oh no!!", panicInfo)
 		// debug.PrintStack()
 	} else {
-		fmt.Println("never goes here")
+		fmt.Println("never get here")
 	}
 }
 
