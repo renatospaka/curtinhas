@@ -13,10 +13,6 @@ ENV TZ America/Sao_Paulo
 ## COPY NECESSARY FILES
 COPY go.* ./
 
-## INSTALL MY STANDARD LIBRARIES 
-RUN  go get github.com/satori/go.uuid && \
-    go get github.com/stretchr/testify
-
 ## TIDY THE PROJECT
 RUN go mod download && \
     go mod tidy
