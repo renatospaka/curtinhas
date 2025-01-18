@@ -1,3 +1,3 @@
 module github.com/renatospaka/optimizer
 
-go 1.18
+go 1.23
